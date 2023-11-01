@@ -1,0 +1,16 @@
+{
+  "name": "Naufal Nasrullah",
+  "short_name": "Naufal Nasrullah",
+  "description": "Naufal Nasrullah",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#14b8a6",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}
