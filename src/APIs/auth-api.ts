@@ -19,7 +19,7 @@ export const authAPI = {
       email,
       password,
       options: {
-        emailRedirectTo: "http://mysociallink.vercel.app/email-confirm",
+        emailRedirectTo: "https://mysociallink.vercel.app/email-confirm",
       },
     });
     if (error) throw new Error(error.message);
