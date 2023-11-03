@@ -74,7 +74,7 @@ export default function Page() {
       toast({
         description: error,
         className:
-          "border-red-500 text-red-500 w-fit text-center fixed top-[12%] left-[52%] -translate-x-1/2 py-2",
+          "max-w-[300px] border-red-500 text-red-500 w-fit text-center fixed top-[12%] left-[50%] -translate-x-1/2 py-2",
         duration: 1500,
       });
   }, [error]);
@@ -140,6 +140,7 @@ export default function Page() {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
+    setError(null);
     const { user } = session;
 
     const updates = {
