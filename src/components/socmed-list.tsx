@@ -11,7 +11,7 @@ type SocmedListProps = {
 const SocmedList = ({ gambar, width, height, text, link }: SocmedListProps) => {
   if (
     link === "https://api.whatsapp.com/send?phone=" ||
-    link === "https://www.instagram.com/" ||
+    link == "https://www.instagram.com/" ||
     link === "https://www.linkedin.com/in/" ||
     link === "https://github.com/" ||
     link === "mailto:"
@@ -19,7 +19,7 @@ const SocmedList = ({ gambar, width, height, text, link }: SocmedListProps) => {
     link = "";
 
   return (
-    <Link to={link} target="_blank" className={`${!link && "pointer-events-none"} pointer-events-none`}>
+    <Link to={link} target="_blank" className={`${!link && "pointer-events-none"}`}>
       <svg width="264" height="50" viewBox="0 0 264 50" fill="" xmlns="http://www.w3.org/2000/svg">
         <g filter="url(#filter0_d_177_26)">
           <rect x="4" width="256" height="42" rx="12" fill="#F3F4F6" />
