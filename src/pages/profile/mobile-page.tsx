@@ -67,7 +67,7 @@ const Mobile = () => {
         }
       }
     }
-    return () => getProfile();
+    getProfile();
   }, [session]);
 
   useEffect(() => {
