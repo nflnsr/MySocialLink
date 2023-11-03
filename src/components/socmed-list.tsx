@@ -11,7 +11,7 @@ type SocmedListProps = {
 const SocmedList = ({ gambar, width, height, text, link }: SocmedListProps) => {
   if (
     link === "https://api.whatsapp.com/send?phone=" ||
-    link == "https://www.instagram.com/" ||
+    link === "https://www.instagram.com/" ||
     link === "https://www.linkedin.com/in/" ||
     link === "https://github.com/" ||
     link === "mailto:"
