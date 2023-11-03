@@ -163,8 +163,8 @@ export default function Page() {
       setError(error.message);
     } else {
       setUserData((userData) => ({ ...userData, avatar_url: data.avatar_url as string }));
+      navigate(0);
     }
-    navigate(0);
     setLoading(false);
   };
 
