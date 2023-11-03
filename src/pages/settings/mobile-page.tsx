@@ -14,7 +14,7 @@ import { Avatar } from "@/components/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { Chatbot } from "@/components/chatbot";
 import { ChangeTheme } from "@/components/change-theme";
@@ -26,12 +26,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { userDataAPI } from "@/APIs/userdata-api";
 
 export default function Page() {
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const session: Session = useAuthStore(selectSession) as Session;
-  const { toast } = useToast();
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     full_name: "",
@@ -51,39 +52,34 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    async function getProfile() {
-      setLoading(true);
-      const { user } = session;
-
-      const { data, error } = await supabase
-        .from("profiles")
-        .select(
-          `full_name, username, greeting, about, whatsapp, instagram, linkedin, github, gmail, avatar_url`
-        )
-        .eq("id", user.id)
-        .single();
-
-      if (error) {
-        console.warn(error);
-      } else if (data) {
-        setUserData({
-          ...userData,
-          full_name: data.full_name,
-          username: data.username,
-          greeting: data.greeting,
-          about: data.about,
-          whatsapp: data.whatsapp,
-          instagram: data.instagram,
-          linkedin: data.linkedin,
-          github: data.github,
-          gmail: data.gmail,
-          avatar_url: data.avatar_url,
+    function getProfile() {
+      setError(null);
+      const userData = session as Session;
+      try {
+        userDataAPI.getUserData(userData.user.id).then((data) => {
+          setUserData((prevUserData) => ({
+            ...prevUserData,
+            ...data,
+          }));
         });
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        }
       }
-      setLoading(false);
     }
-    getProfile();
+    return () => getProfile();
   }, [session]);
+
+  useEffect(() => {
+    if (error)
+      toast({
+        description: error,
+        className:
+          "border-red-500 text-red-500 w-fit text-center fixed top-[12%] left-[52%] -translate-x-1/2 py-2",
+        duration: 1500,
+      });
+  }, [error]);
 
   async function updateProfile(event: React.FormEvent<HTMLFormElement>, avatar_url: string) {
     event.preventDefault();
@@ -144,7 +140,7 @@ export default function Page() {
     },
   });
 
-  const onsubmitt = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setLoading(true);
     const { user } = session;
 
@@ -184,7 +180,7 @@ export default function Page() {
       });
       return;
     }
-    navigator.clipboard.writeText(`https://social-media-branding-test.vercel.app/${text}`);
+    navigator.clipboard.writeText(`https://mysociallink.vercel.app/${text}`);
     setIsCopied(true);
     toast({
       description: "link has been copied",
@@ -208,7 +204,7 @@ export default function Page() {
           </div>
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(onsubmitt)}
+              onSubmit={form.handleSubmit(onSubmit)}
               className="px-4 text-center mx-auto max-w-[450px] w-full"
             >
               <Avatar

@@ -1,12 +1,13 @@
 import Layout from "@/components/mobile-layout";
-import { supabase } from "@/lib/supabase-client";
 import { selectSession, useAuthStore } from "@/store/auth";
 import { Session } from "@supabase/supabase-js";
 import { Menu, X, Sun, Moon, UserCog } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useSetTheme, useTheme } from "@/store/theme";
+import { userDataAPI } from "@/APIs/userdata-api";
 import { Link } from "react-router-dom";
 import { Avatar } from "@/components/avatar";
+import { toast } from "@/components/ui/use-toast";
 import "react-device-frameset/styles/marvel-devices.min.css";
 import SocmedList from "@/components/socmed-list";
 import whatsappIcon from "/assets/whatsapp.svg";
@@ -17,6 +18,7 @@ import gmailIcon from "/assets/gmail.svg";
 import Sidebar from "@/components/sidebar";
 
 const Mobile = () => {
+  const [error, setError] = useState<string | null>(null);
   const [showSideBar, setShowSidebar] = useState(false);
   const session: Session = useAuthStore(selectSession) as Session;
   const theme = useTheme();
@@ -45,41 +47,37 @@ const Mobile = () => {
 
   useEffect(() => {
     document.title = userData.full_name || "MySocialLink - Profile";
-  }, []);
+  }, [userData.full_name]);
 
   useEffect(() => {
-    async function getProfile() {
-      const { user } = session;
-
-      const { data, error } = await supabase
-        .from("profiles")
-        .select(
-          `full_name, username,
-          greeting, about, whatsapp, instagram, linkedin, github, gmail, avatar_url`
-        )
-        .eq("id", user.id)
-        .single();
-
-      if (error) {
-        console.warn(error);
-      } else if (data) {
-        setUserData({
-          ...userData,
-          full_name: data.full_name,
-          username: data.username,
-          greeting: data.greeting,
-          about: data.about,
-          whatsapp: data.whatsapp,
-          instagram: data.instagram,
-          linkedin: data.linkedin,
-          github: data.github,
-          gmail: data.gmail,
-          avatar_url: data.avatar_url,
+    function getProfile() {
+      setError(null);
+      const userData = session as Session;
+      try {
+        userDataAPI.getUserData(userData.user.id).then((data) => {
+          setUserData((prevUserData) => ({
+            ...prevUserData,
+            ...data,
+          }));
         });
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        }
       }
     }
-    getProfile();
+    return () => getProfile();
   }, [session]);
+
+  useEffect(() => {
+    if (error)
+      toast({
+        description: error,
+        className:
+          "border-red-500 text-red-500 w-fit text-center fixed top-[12%] left-[52%] -translate-x-1/2 py-2",
+        duration: 1500,
+      });
+  }, [error]);
 
   const socialLink = [
     {
@@ -109,7 +107,7 @@ const Mobile = () => {
     {
       id: 4,
       logo: githubIcon,
-      link: "https://github.com/nflnsr" + userData.github,
+      link: "https://github.com/" + userData.github,
       width: "30px",
       height: "30px",
       text: "GitHub",
@@ -127,7 +125,7 @@ const Mobile = () => {
   return (
     <div className="flex w-screen bg-black">
       <div className="min-h-screen flex items-center mx-auto w-full">
-        <div id="desktop" className="w-full">
+        <div className="w-full">
           <Layout className="pointer-events-auto">
             <div id="divMenuIcon" className="mt-5 flex justify-between px-3">
               <div className="">

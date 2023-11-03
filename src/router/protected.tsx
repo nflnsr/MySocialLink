@@ -3,11 +3,11 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function ProtectedRoute() {
-  const auth = useAuthStore(selectGetSession);
+  const getSession = useAuthStore(selectGetSession);
   const session = useAuthStore(selectSession);
   useEffect(() => {
-    auth();
-  }, [auth]);
+    getSession();
+  }, [getSession]);
   if (!session) return <Outlet />;
   return <Navigate to="/profile" />;
 }

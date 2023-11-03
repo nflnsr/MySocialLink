@@ -19,7 +19,6 @@ const Mobile = () => {
   const [showSideBar, setShowSidebar] = useState(false);
   const theme = useTheme();
   const setTheme = useSetTheme();
-
   const [publicImgUrl, setPublicImgUrl] = useState("");
   const [userData, setUserData] = useState({
     full_name: "",
@@ -61,7 +60,6 @@ const Mobile = () => {
 
   useEffect(() => {
     document.title = userData.full_name || "MySocialLink";
-    console.log(userData.full_name);
   }, [userData.full_name]);
 
   useEffect(() => {

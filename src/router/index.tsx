@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { selectGetSession, selectIsAuth, useAuthStore } from "@/store/auth";
 import DesktopSettings from "@/pages/settings/desktop-page";
 import MobileSettings from "@/pages/settings/mobile-page";
 import DesktopLandingPage from "@/pages/landing-page/desktop-page";
@@ -10,9 +13,6 @@ import DesktopProfile from "@/pages/profile/desktop-page";
 import MobileProfile from "@/pages/profile/mobile-page";
 import DesktopPublicUser from "@/pages/[username]/desktop-page";
 import MobilePublicUser from "@/pages/[username]/mobile-page";
-import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import { selectGetSession, selectIsAuth, useAuthStore } from "@/store/auth";
 import { Chatbot } from "@/components/chatbot";
 import { ChangeTheme } from "@/components/change-theme";
 import { ViewExample } from "@/components/preview-example";
@@ -20,24 +20,27 @@ import { Logo } from "@/components/logo";
 
 function Index() {
   const isAuth = useAuthStore(selectIsAuth);
-  const session = useAuthStore(selectGetSession);
+  const getSession = useAuthStore(selectGetSession);
   const [isMobile, setIsMobile] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const userAgent = navigator.userAgent.toLowerCase();
     const isMobileDevice = /mobile|android|ios|iphone|ipad|ipod|windows phone/i.test(userAgent);
     setIsMobile(isMobileDevice);
-    session();
+    getSession();
   }, []);
 
   return (
     <>
       {!isMobile ? (
         <main className="grid grid-rows-1 grid-cols-3 place-self-center min-w-[1475px] w-full min-h-screen">
-          <section className="col-start-1 row-start-1 mt-8 ">
-            <Logo />
-            {isAuth ? <ChangeTheme /> : <ViewExample />}
-          </section>
+          {!location.pathname.includes("email-confirm") && (
+            <section className="col-start-1 row-start-1 mt-8 ">
+              <Logo />
+              {isAuth ? <ChangeTheme /> : <ViewExample />}
+            </section>
+          )}
           <section className={`cols-start-2 row-start-1 ${!isAuth && "ml-14"}`}>
             <Routes>
               <Route path="/email-confirm" element={<EmailConfirm />} />
@@ -53,9 +56,11 @@ function Index() {
               </Route>
             </Routes>
           </section>
-          <section className="col-start-3 row-start-1 mx-auto my-[15%]">
-            <Chatbot />
-          </section>
+          {!location.pathname.includes("email-confirm") && (
+            <section className="col-start-3 row-start-1 mx-auto my-[15%]">
+              <Chatbot />
+            </section>
+          )}
         </main>
       ) : (
         <main className="">
