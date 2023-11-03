@@ -29,7 +29,7 @@ export default function Page() {
 
   return (
     <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2">
-      email confirmed, you can close this page {timer}
+      email confirmed, you redirect to profile page in {timer}
     </div>
   );
 }

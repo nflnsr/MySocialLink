@@ -4,10 +4,10 @@ import { useTheme } from "@/store/theme";
 import { applyThemePreference } from "@/utils/theme";
 
 export default function App() {
-  const themee = useTheme();
+  const theme = useTheme();
   useEffect(() => {
-    applyThemePreference(themee);
-  }, [themee]);
+    applyThemePreference(theme);
+  }, [theme]);
 
   return (
     <Index />

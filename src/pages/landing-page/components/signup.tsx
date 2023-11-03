@@ -1,16 +1,17 @@
-import { supabase } from "@/lib/supabase-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formSchema, FormValues } from "@/validator/login-signup-form";
 import { useVerifyStore } from "@/store/verify";
 import { useNavigate } from "react-router-dom";
+import { authAPI } from "@/APIs/auth-api";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { TabsContent } from "@/components/ui/tabs";
 import { ShowPassword } from "./ui/show-password";
 import { GoogleIcon } from "./ui/google-icon";
 import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "@/components/ui/use-toast";
 import {
   Form,
   FormControl,
@@ -22,6 +23,10 @@ import {
 
 export function SignUp() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const userId = useVerifyStore();
+  const navigate = useNavigate();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,25 +35,43 @@ export function SignUp() {
     },
   });
 
-  const navigate = useNavigate();
-
-  const userId = useVerifyStore();
+  useEffect(() => {
+    if (error)
+      toast({
+        description: error,
+        className:
+          "border-red-500 text-red-500 w-fit text-center fixed top-[12%] left-[52%] -translate-x-1/2 py-2",
+        duration: 1500,
+      });
+  }, [error]);
 
   const onSubmit = async (values: FormValues) => {
-    const { data, error } = await supabase.auth.signUp({
-      email: values.email,
-      password: values.password,
-      options: {
-        emailRedirectTo: "http://127.0.0.1:5173/email-confirm",
-      },
-    });
-    if (data) {
-      userId.setUserId(data.user!.id);
+    setLoading(true);
+    setError(null);
+    try {
+      await authAPI.signUpWithPassword(values).then((data) => {
+        userId.setUserId(data.user!.id);
+        navigate(`/verif/${data.user?.id}}`);
+      });
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }
+    } finally {
       setLoading(false);
-      navigate(`/verif/${data.user?.id}}`);
-    } else if (error) {
+    }
+  };
+
+  const googleSignIn = async () => {
+    setLoading(true);
+    try {
+      await authAPI.signInWithGoogle();
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }
+    } finally {
       setLoading(false);
-      alert(error);
     }
   };
 
@@ -89,7 +112,7 @@ export function SignUp() {
               />
               <div>
                 <Button className="w-full bg-blue-500/40 mt-4" type="submit" disabled={loading}>
-                  Submit
+                  {loading ? "loading ..." : "Submit"}
                 </Button>
               </div>
             </form>
@@ -97,17 +120,7 @@ export function SignUp() {
           <p className="text-center">or</p>
           <Button
             className="w-full bg-cyan-400 mt-1 gap-1"
-            onClick={() =>
-              supabase.auth.signInWithOAuth({
-                provider: "google",
-                options: {
-                  queryParams: {
-                    access_type: "offline",
-                    prompt: "consent",
-                  },
-                },
-              })
-            }
+            onClick={() => googleSignIn()}
             disabled={loading}
           >
             <GoogleIcon />

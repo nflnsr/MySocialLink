@@ -1,14 +1,15 @@
-import { supabase } from "@/lib/supabase-client";
+import { useEffect, useState } from "react";
 import { formSchema, FormValues } from "@/validator/login-signup-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { authAPI } from "@/APIs/auth-api";
 import { ShowPassword } from "./ui/show-password";
 import { GoogleIcon } from "./ui/google-icon";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TabsContent } from "@/components/ui/tabs";
+import { toast } from "@/components/ui/use-toast";
 import {
   Form,
   FormControl,
@@ -19,6 +20,8 @@ import {
 } from "@/components/ui/form";
 
 export function Login() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -26,21 +29,48 @@ export function Login() {
       password: "",
     },
   });
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error)
+      toast({
+        description: error,
+        className:
+          "border-red-500 text-red-500 w-fit text-center fixed top-[12%] left-[52%] -translate-x-1/2 py-2",
+        duration: 1500,
+      });
+  }, [error]);
+
   const onSubmit = async (values: FormValues) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: values.email,
-      password: values.password,
-    });
-    navigate(0);
-    console.log(data);
-    console.log(error);
+    setLoading(true);
+    setError(null);
+    try {
+      await authAPI.signInWithPassword(values);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const googleSignIn = async () => {
+    setLoading(true);
+    try {
+      await authAPI.signInWithGoogle();
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <TabsContent value="login">
       <Card className="min-h-[300px] shadow-[#fcc2ff] shadow-[2px_7px_60px_0_rgba(0,0,0,0.3)]  backdrop-blur-[4px] bg-[rgba(255,255,255,0.25)] rounded-lg">
-        <CardContent className="mt-5 ">
+        <CardContent className="mt-5">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
@@ -73,8 +103,8 @@ export function Login() {
                 )}
               />
               <div>
-                <Button className="w-full bg-blue-500/40 mt-4" type="submit">
-                  Submit
+                <Button className="w-full bg-blue-500/40 mt-4" type="submit" disabled={loading}>
+                  {loading ? "loading ..." : "Submit"}
                 </Button>
               </div>
             </form>
@@ -82,17 +112,8 @@ export function Login() {
           <p className="text-center">or</p>
           <Button
             className="w-full bg-cyan-400 mt-1 gap-1"
-            onClick={() =>
-              supabase.auth.signInWithOAuth({
-                provider: "google",
-                options: {
-                  queryParams: {
-                    access_type: "offline",
-                    prompt: "consent",
-                  },
-                },
-              })
-            }
+            onClick={() => googleSignIn()}
+            disabled={loading}
           >
             <GoogleIcon />
             <span className="pb-[2px]">Login with Google</span>

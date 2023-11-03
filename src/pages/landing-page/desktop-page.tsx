@@ -5,26 +5,25 @@ import { SignUp } from "./components/signup";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Sun, Moon } from "lucide-react";
 import { useSetTheme, useTheme } from "@/store/theme";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function Page() {
   const theme = useTheme();
-  const setThemee = useSetTheme();
+  const setTheme = useSetTheme();
+
   useEffect(() => {
     document.title = "MySocialLink";
   }, []);
 
   return (
     <Layout>
-      <div className="mx-auto pointer-events-auto z-20 group py-7">
+      <Toaster />
+      <div className="mx-auto pointer-events-auto z-20 group py-8">
         <button
-          className="py-3 cursor-pointer hover:animate-spin dark:group-hover:animate-bounce"
-          onClick={setThemee}
+          className="block hover:animate-spin dark:hover:animate-bounce focus:animate-spin dark:focus:animate-bounce focus:bg-black focus:bg-opacity-10 dark:focus:bg-opacity-20 rounded-full delay-200 duration-500 ease-in text-slate-600 dark:text-slate-200"
+          onClick={setTheme}
         >
-          {theme === "light" ? (
-            <Sun className="w-7 h-7 text-green-700" />
-          ) : (
-            <Moon className="w-8 h-8 text-slate-200" />
-          )}
+          {theme === "light" ? <Sun className="w-7 h-7" /> : <Moon className="w-7 h-7" />}
         </button>
       </div>
       <div className="backdrop-blur-sm absolute h-full flex justify-center items-center pointer-events-auto w-full">
