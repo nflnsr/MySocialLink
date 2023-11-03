@@ -5,7 +5,7 @@ import { Menu, X, Sun, Moon, UserCog } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useSetTheme, useTheme } from "@/store/theme";
 import { userDataAPI } from "@/APIs/userdata-api";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Avatar } from "@/components/avatar";
 import { toast } from "@/components/ui/use-toast";
 import "react-device-frameset/styles/marvel-devices.min.css";
@@ -22,6 +22,7 @@ const Mobile = () => {
   const [showSideBar, setShowSidebar] = useState(false);
   const session: Session = useAuthStore(selectSession) as Session;
   const theme = useTheme();
+  const navigate = useNavigate();
   const setTheme = useSetTheme();
   const [userData, setUserData] = useState({
     full_name: "",
@@ -129,11 +130,11 @@ const Mobile = () => {
           <Layout className="pointer-events-auto">
             <div id="divMenuIcon" className="mt-5 flex justify-between px-3">
               <div className="">
-                <Link to="/settings">
-                  <button className="block">
+                {/* <Link to="/settings"> */}
+                  <button className="block" onClick={() => navigate("/settings")}>
                     <UserCog className="hover:bg-black hover:bg-opacity-[0.08] w-6 h-fit" />
                   </button>
-                </Link>
+                {/* </Link> */}
               </div>
               <div className="z-20">
                 <button

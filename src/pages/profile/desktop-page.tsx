@@ -2,7 +2,7 @@ import Layout from "@/components/desktop-layout";
 import { selectSession, useAuthStore } from "@/store/auth";
 import { Session } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Menu, X, Sun, Moon, UserCog } from "lucide-react";
 import { userDataAPI } from "@/APIs/userdata-api";
 import { useSetTheme, useTheme } from "@/store/theme";
@@ -23,6 +23,7 @@ const Desktop = () => {
   const session: Session = useAuthStore(selectSession) as Session;
   const theme = useTheme();
   const setTheme = useSetTheme();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     full_name: "",
     username: "",
@@ -129,11 +130,11 @@ const Desktop = () => {
           <Layout className="pointer-events-auto">
             <div id="divMenuIcon" className="mt-5 flex justify-between px-3">
               <div className="">
-                <Link to="/settings">
-                  <button className="block">
+                {/* <Link to="/settings"> */}
+                  <button className="block" onClick={() => navigate("/settings")}>
                     <UserCog className="hover:bg-black hover:bg-opacity-[0.08] w-6 h-fit" />
                   </button>
-                </Link>
+                {/* </Link> */}
               </div>
               <div className="z-20">
                 <button
