@@ -67,7 +67,7 @@ const Desktop = () => {
         }
       }
     }
-    return () => getProfile();
+    getProfile();
   }, [session]);
 
   useEffect(() => {
