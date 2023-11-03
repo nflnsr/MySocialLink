@@ -68,7 +68,7 @@ export default function Page() {
         }
       }
     }
-    return () => getProfile();
+    getProfile();
   }, [session]);
 
   useEffect(() => {
