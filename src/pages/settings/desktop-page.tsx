@@ -28,7 +28,7 @@ import { userDataAPI } from "@/APIs/userdata-api";
 
 export default function Page() {
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const session: Session = useAuthStore(selectSession) as Session;
   const navigate = useNavigate();
