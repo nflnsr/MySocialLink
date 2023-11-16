@@ -10,5 +10,5 @@ export default function PrivateRoute() {
     getSession();
   }, [getSession]);
   if (auth) return <Outlet />;
-  navigate("/")
+  navigate("/", { replace: true });
 }

@@ -9,5 +9,5 @@ export default function ProtectedRoute() {
     getSession();
   }, [getSession]);
   if (!session) return <Outlet />;
-  return <Navigate to="/profile" />;
+  return <Navigate to="/profile" replace />;
 }
