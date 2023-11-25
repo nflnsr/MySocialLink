@@ -7,7 +7,7 @@ import { Avatar } from "@/components/avatar";
 import "react-device-frameset/styles/marvel-devices.min.css";
 import SocmedList from "@/components/socmed-list";
 import Sidebar from "@/components/sidebar";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X, Sun, Moon, Undo2 } from "lucide-react";
 import { OpenGraph } from "@/components/open-graph";
 import whatsappIcon from "/assets/whatsapp.svg";
 import instagramIcon from "/assets/instagram.svg";
@@ -109,7 +109,11 @@ const Desktop = () => {
       <div className="min-h-screen flex items-center mx-auto">
         <div id="desktop" className="w-max">
           <Layout className="pointer-events-auto">
-            <div id="divMenuIcon" className="mt-5 flex ml-auto px-3">
+            <div id="divMenuIcon" className="mt-5 flex justify-between px-3">
+              <Undo2
+                className="cursor-pointer hover:bg-black hover:bg-opacity-[0.08]"
+                onClick={() => navigate("/profile")}
+              />
               <div className="z-20">
                 <button
                   className="block"

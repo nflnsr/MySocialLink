@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { selectIsAuth, useAuthStore } from "@/store/auth";
 
 type AvatarProps = {
   url: string;
@@ -21,6 +22,7 @@ export function Avatar({ url, onUpload, isEdit, username }: AvatarProps) {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
+  const isAuth = useAuthStore(selectIsAuth);
 
   useEffect(() => {
     if (url) downloadImage(url);
@@ -94,7 +96,7 @@ export function Avatar({ url, onUpload, isEdit, username }: AvatarProps) {
             />
           </div>
         </DialogTrigger>
-        <DialogContent className="max-w-[350px]">
+        <DialogContent className={`max-w-[350px] ${!isAuth && "ml-7"}`}>
           <DialogHeader>
             <DialogTitle>Profile Photo</DialogTitle>
           </DialogHeader>
