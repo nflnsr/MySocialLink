@@ -7,6 +7,7 @@ export function ShowPassword() {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
+            aria-label="show password"
             type="button"
             variant="outline"
             className="w-5 h-5 float-right mb-2 py-0"

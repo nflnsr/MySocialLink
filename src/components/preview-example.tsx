@@ -14,13 +14,13 @@ export function ViewExample() {
       <div className="flex justify-between px-3 max-w-[500px] sm:mx-auto bg-gradient-to-br from-emerald-300 via-cyan-300 to-lime-200 dark:bg-gradient-to-br dark:from-sky-800 dark:via-sky-800 dark:to-sky-800 pb-5 mx-5 rounded-md">
         <Dialog>
           <DialogTrigger asChild>
-            <div className="text-center">
-              <label htmlFor="dekstop-light">Light Mode</label>
+            <div>
+              <p className="text-center">Light Mode</p>
               <img
                 id="desktop-light"
                 className="w-[230px] mt-1"
                 src="/assets/desktop-light.png"
-                alt=""
+                alt="desktop light example"
               />
             </div>
           </DialogTrigger>
@@ -29,19 +29,23 @@ export function ViewExample() {
               <DialogTitle>Preview Desktop Light Mode</DialogTitle>
             </DialogHeader>
             <div className="flex items-center space-x-2">
-              <img src="/assets/desktop-light.png" alt="Avatar" className="border-2" />
+              <img
+                src="/assets/desktop-light.png"
+                alt="desktop light example"
+                className="border-2"
+              />
             </div>
           </DialogContent>
         </Dialog>
         <Dialog>
           <DialogTrigger asChild>
-            <div className="text-center">
-              <label htmlFor="desktop-dark">Dark Mode</label>
+            <div>
+              <p className="text-center">Dark Mode</p>
               <img
                 id="desktop-dark"
                 className="w-[230px] mt-1"
                 src="/assets/desktop-dark.png"
-                alt=""
+                alt="desktop dark example"
               />
             </div>
           </DialogTrigger>
@@ -50,7 +54,7 @@ export function ViewExample() {
               <DialogTitle>Preview Desktop Dark Mode</DialogTitle>
             </DialogHeader>
             <div className="flex items-center space-x-2">
-              <img src="/assets/desktop-dark.png" alt="Avatar" className="border-2" />
+              <img src="/assets/desktop-dark.png" alt="desktop dark example" className="border-2" />
             </div>
           </DialogContent>
         </Dialog>
@@ -59,13 +63,13 @@ export function ViewExample() {
       <div className="flex justify-evenly max-w-[320px] mx-auto bg-gradient-to-tr from-emerald-300 via-cyan-300 to-lime-200 dark:bg-gradient-to-br dark:from-sky-800 dark:via-sky-800 dark:to-sky-800 pb-5 rounded-md">
         <Dialog>
           <DialogTrigger asChild>
-            <div className="text-center">
-              <label htmlFor="dekstop-light">Light Mode</label>
+            <div>
+              <p className="text-center">Light Mode</p>
               <img
-                id="desktop-light"
+                id="mobile-light"
                 className="h-[210px] mt-1"
                 src="/assets/mobile-light.png"
-                alt=""
+                alt="mobile light example"
               />
             </div>
           </DialogTrigger>
@@ -74,19 +78,19 @@ export function ViewExample() {
               <DialogTitle>Preview Mobile Light Mode</DialogTitle>
             </DialogHeader>
             <div className="flex items-center space-x-2 px-16 sm:px-32">
-              <img src="/assets/mobile-light.png" alt="Avatar" className="border-2" />
+              <img src="/assets/mobile-light.png" alt="mobile light example" className="border-2" />
             </div>
           </DialogContent>
         </Dialog>
         <Dialog>
           <DialogTrigger asChild>
-            <div className="text-center">
-              <label htmlFor="desktop-dark">Dark Mode</label>
+            <div>
+              <p className="text-center">Dark Mode</p>
               <img
-                id="desktop-dark"
+                id="mobile-dark"
                 className="h-[210px] mt-1"
                 src="/assets/mobile-dark.png"
-                alt=""
+                alt="mobile dark example"
               />
             </div>
           </DialogTrigger>
@@ -95,7 +99,7 @@ export function ViewExample() {
               <DialogTitle>Preview Mobile Dark Mode</DialogTitle>
             </DialogHeader>
             <div className="flex items-center space-x-2 px-16 sm:px-32">
-              <img src="/assets/mobile-dark.png" alt="Avatar" className="border-2" />
+              <img src="/assets/mobile-dark.png" alt="mobile dark example" className="border-2" />
             </div>
           </DialogContent>
         </Dialog>
