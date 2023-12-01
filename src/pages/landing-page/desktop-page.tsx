@@ -20,6 +20,7 @@ export default function Page() {
       <Toaster />
       <div className="mx-auto pointer-events-auto z-20 group py-8">
         <button
+          aria-label="Toggle Dark Mode"
           className="block hover:animate-spin dark:hover:animate-bounce focus:animate-spin dark:focus:animate-bounce focus:bg-black focus:bg-opacity-10 dark:focus:bg-opacity-20 rounded-full delay-200 duration-500 ease-in text-slate-600 dark:text-slate-200"
           onClick={setTheme}
         >
