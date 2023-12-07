@@ -1,7 +1,7 @@
 {
-  "name": "Naufal Nasrullah",
-  "short_name": "Naufal Nasrullah",
-  "description": "Naufal Nasrullah",
+  "name": "MySocialLink",
+  "short_name": "MySocialLink",
+  "description": "MySocialLink",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fff",
