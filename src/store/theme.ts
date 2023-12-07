@@ -14,7 +14,7 @@ const useThemeStore = create(persist<Theme>(
             theme: get().theme === "dark" ? "light" : "dark"
         })),
     }), {
-        name: 'theme', // name of the item in the storage (must be unique)
+        name: 'theme',
     }
 ));
 
