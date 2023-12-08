@@ -16,7 +16,7 @@ let urlsToCache = [
   "/assets/page-8fulyZwY.js",
   "/assets/index-7TPxHqXz.css",
   "/assets/page-Lm8SCt9v.css",
-  
+
   "/assets/default-pp.jpg",
   "/assets/github.svg",
   "/assets/gmail.svg",
@@ -29,12 +29,10 @@ let urlsToCache = [
   "/assets/mobile-light.png",
 ];
 
-const CACHE_EXPIRATION = 86400 * 30;
-
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache.map(url => new Request(url, { cache: { maxAge: CACHE_EXPIRATION } })));
+      return cache.addAll(urlsToCache);
     })
   );
 });
@@ -42,10 +40,16 @@ self.addEventListener("install", (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      if (response) {
-        return response;
+      if (!response) {
+        return fetch(event.request);
       }
-      return fetch(event.request);
+      const date = new Date(response.headers.get("date"));
+      // if cached file is older than 7 days, fetch a new one
+      if (Date.now() > date.getTime() + 1000 * 60 * 60 * 24 * 30) {
+        return fetch(event.request);
+      }
+      // else return cached version
+      return response;
     })
   );
 });
