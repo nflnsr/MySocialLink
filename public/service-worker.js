@@ -10,13 +10,12 @@ let urlsToCache = [
   "/icon.png",
   "/assets/logo.png",
 
-  "/assets/LoadingDesktop-SzP-ZQCw.js",
-  "/assets/desktop-aQIwECEN.js",
-  "/assets/index-85hss74N.js",
-  "/assets/page-LZumZvWz.js",
+  "/assets/LoadingDesktop-Kyq0xXjj.js",
+  "/assets/desktop-R4KZouVo.js",
+  "/assets/page-bdHF2DR3.js",
+  "/assets/index-ZHIzr7hR.js",
   "/assets/index-7TPxHqXz.css",
   "/assets/page-Lm8SCt9v.css",
-  "/assets/index-ZHIzr7hR.js",
   
   "/assets/default-pp.jpg",
   "/assets/github.svg",
