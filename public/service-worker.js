@@ -7,6 +7,7 @@ let urlsToCache = [
   "/settings",
   "/manifest.webmanifest",
   "/favicon.ico",
+  "/icon.png",
   "/assets/logo.png",
 
   "/assets/LoadingDesktop-SzP-ZQCw.js",
@@ -15,6 +16,7 @@ let urlsToCache = [
   "/assets/page-LZumZvWz.js",
   "/assets/index-7TPxHqXz.css",
   "/assets/page-Lm8SCt9v.css",
+  "/assets/index-ZHIzr7hR.js",
   
   "/assets/default-pp.jpg",
   "/assets/github.svg",
