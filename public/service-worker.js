@@ -8,10 +8,14 @@ let urlsToCache = [
   "/manifest.webmanifest",
   "/favicon.ico",
   "/assets/logo.png",
-  "/assets/index-ZHIzr7hR.js",
-  "/assets/index-jbnd5UXw.js",
-  "/assets/index-7TPxHqXz.css",
-  "/assets/index-U0WIGWY_.css",
+
+  "/assets/LoadingDesktop-SzP-ZQCw.js",
+  "assets/desktop-aQIwECEN.js",
+  "assets/index-85hss74N.js",
+  "assets/page-LZumZvWz.js",
+  "assets/index-7TPxHqXz.css",
+  "assets/page-Lm8SCt9v.css",
+  
   "/assets/default-pp.jpg",
   "/assets/github.svg",
   "/assets/gmail.svg",
