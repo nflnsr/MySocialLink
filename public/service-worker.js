@@ -29,10 +29,12 @@ let urlsToCache = [
   "/assets/mobile-light.png",
 ];
 
+const CACHE_EXPIRATION = 86400 * 30;
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
+      return cache.addAll(urlsToCache.map(url => new Request(url, { cache: { maxAge: CACHE_EXPIRATION } })));
     })
   );
 });
