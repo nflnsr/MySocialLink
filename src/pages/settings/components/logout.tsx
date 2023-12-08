@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import {
   AlertDialog,
@@ -13,7 +12,6 @@ import {
 import { supabase } from "@/lib/supabase-client";
 
 export function Logout() {
-  const navigate = useNavigate();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -31,7 +29,7 @@ export function Logout() {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              supabase.auth.signOut().then(() => navigate(0));
+              supabase.auth.signOut();
             }}
           >
             Continue
