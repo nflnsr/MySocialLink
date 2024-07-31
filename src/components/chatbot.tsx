@@ -53,7 +53,7 @@ export function Chatbot({ className }: { className?: string }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.VITE_AIMLAPI_KEY}`,
+        "Authorization": "Bearer " + process.env.VITE_AIMLAPI_KEY,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
