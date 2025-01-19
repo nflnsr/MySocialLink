@@ -11,7 +11,9 @@ let urlsToCache = [
   "/assets/logo.png",
 
   "/assets/LoadingDesktop-hMDe6GWH.js",
+  "/assets/LoadingMobile-WH-cbMul.js",
   "/assets/desktop-mLCdlAd5.js",
+  "/assets/mobile-B67mzwjE.js",
   "/assets/index-iPEoNYBE.js",
   "/assets/page-f3FpdWIN.js",
   "/assets/index-7TPxHqXz.css",
