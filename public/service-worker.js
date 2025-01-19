@@ -10,10 +10,10 @@ let urlsToCache = [
   "/icon.png",
   "/assets/logo.png",
 
-  "/assets/LoadingDesktop-N9ULLX5v.js",
-  "/assets/desktop-vt54pfHb.js",
-  "/assets/index-1nwqPfN_.js",
-  "/assets/page-NuP9inAn.js",
+  "/assets/LoadingDesktop-hMDe6GWH.js",
+  "/assets/desktop-mLCdlAd5.js",
+  "/assets/index-iPEoNYBE.js",
+  "/assets/page-f3FpdWIN.js",
   "/assets/index-7TPxHqXz.css",
   "/assets/page-Lm8SCt9v.css",
 
